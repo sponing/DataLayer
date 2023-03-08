@@ -174,7 +174,8 @@ var clickTimer = setInterval(function() {
                 payloadData.target_title = aHeaderFooterDom.textContent;
                 payloadData.target_type = 'Link';
                 var aHeaderFooterDomHref = aHeaderFooterDom.getAttribute("href");
-                payloadData.target_link_url = aHeaderFooterDomHref.indexOf('http') !== -1 ? aHeaderFooterDomHref :  window.location.href.split("/?")[0] + aHeaderFooterDomHref;
+                var target_link_url = aHeaderFooterDomHref.indexOf('http') !== -1 ? aHeaderFooterDomHref :  window.location.href.split("/?")[0] + aHeaderFooterDomHref;
+                payloadData.target_link_url = target_link_url.replace('com//', 'com/')
                 payloadData.target_link_urlpath = aHeaderFooterDomHref.indexOf('http') !== -1 ? '' : aHeaderFooterDomHref;
 
                 if (payloadData.target_link_urlpath.indexOf('/shop/') !== -1) {
@@ -227,7 +228,7 @@ var clickTimer = setInterval(function() {
                     target_component: "Header",
                     target_title: "Logo",
                     target_type: "Link",
-                    target_link_url: location.href.split('com/')[0],
+                    target_link_url: location.href,
                     target_link_urlpath: "/",
                     my_store_default: '',
                     my_store_default: '',
@@ -475,8 +476,8 @@ var clickTimer = setInterval(function() {
     }
     var footerSignButton = document.querySelector('footer form button')
     var footerSignInput = document.querySelector('footer form input')
-    footerSignButton && addAction(footerSignButton, 'Footer', footerSignButton.textContent, 'Search', 'click', footerSignInput)
-    footerSignInput && addAction(footerSignInput, 'Footer', footerSignButton.textContent, 'Search','keydown', footerSignInput)
+    footerSignButton && addAction(footerSignButton, 'Footer', footerSignButton.textContent, 'Subscribe', 'click', footerSignInput)
+    footerSignInput && addAction(footerSignInput, 'Footer', footerSignButton.textContent, 'Subscribe','keydown', footerSignInput)
 
 }, 1000)
 

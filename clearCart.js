@@ -10,8 +10,7 @@ var clearCaratTimer = setInterval(function() {
                     if (!headerBoxMonitor || (headerBoxMonitor && headerBoxMonitor.textContent === '(0 item)')) {
                         clearInterval(monitor)
                         dataLayer.push({
-                            event: 'clearCart',
-                            time: new Date().getTime(),
+                            event: 'clearCart'
                         });
                     }
                 }, 1000)
