@@ -411,9 +411,10 @@ var nextDataTimer = setInterval(function() {
         var nextModules = __NEXT_DATA__.props.pageProps.modules
         nextModules.map(function(item, index) {
             if (item['data'] && item['data']['apiPath']) {
+                var keyIndex = Object.keys(adComponents).length
                 var itemObj = {
-                    title: item['data']['title'] || item['data']['title1'] ||  item['data']['subTitle'] || '',
-                    index: index,
+                    index: keyIndex,
+                    title: item['data']['title'] || item['data']['title1'] ||  item['data']['subTitle'] ||  item['data']['subHead'] || '',
                     apiPath: item['data']['apiPath'],
                 }
                 adComponents['adComponents-' + item['id']] = itemObj
