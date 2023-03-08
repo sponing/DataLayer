@@ -194,6 +194,7 @@ var clickTimer = setInterval(function() {
 
                 if (aHeaderFooterDom && aHeaderFooterDom.getAttribute('aria-label') && aHeaderFooterDom.getAttribute('aria-label').indexOf('Logo Home') > -1) {
                     payloadData.target_title = 'Logo'
+                    payloadData.target_link_url = location.href.split('com/')[0] + 'com/'
                 }
 
                 if (aHeaderFooterDom.getAttribute('href').indexOf('tel:') !== -1) {
@@ -228,7 +229,7 @@ var clickTimer = setInterval(function() {
                     target_component: "Header",
                     target_title: "Logo",
                     target_type: "Link",
-                    target_link_url: location.href,
+                    target_link_url: location.href.split('com/')[0] + 'com/',
                     target_link_urlpath: "/",
                     my_store_default: '',
                     my_store_default: '',

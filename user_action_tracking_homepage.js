@@ -149,7 +149,7 @@ function getComponentData(componentDom, componenttitle, componentPosition, comId
     var payloadData = {
         component_type: componentDom.getAttribute('componentname'),
         component_position: componentPosition + 1,
-        component_id: window.__NEXT_DATA__.props.pageProps.modules[componentPosition].id,
+        component_id: window.__NEXT_DATA__.props.pageProps.modules[componentPosition + 1].id,
         component_title: componenttitle,
         component_timestamp: new Date().getTime(),
         component_subtitle: '',
@@ -407,18 +407,18 @@ function getComponentData(componentDom, componenttitle, componentPosition, comId
 var nextDataTimer = setInterval(function() {
     if (typeof __NEXT_DATA__ === 'object') {
         clearInterval(nextDataTimer)
-        var adComponents = []
+        var adComponents = {}
         var nextModules = __NEXT_DATA__.props.pageProps.modules
         nextModules.map(function(item, index) {
             if (item['data'] && item['data']['apiPath']) {
-                adComponents.push({
-                    id: item['id'],
+                var itemObj = {
                     title: item['data']['title'] || item['data']['title1'] ||  item['data']['subTitle'] || '',
                     index: index,
                     apiPath: item['data']['apiPath'],
-                })
+                }
+                adComponents['adComponents-' + item['id']] = itemObj
             }
         })
-        dataLayer.push({ adComponents: adComponents })
+        dataLayer.push(adComponents)
     }
 }, 1000)
