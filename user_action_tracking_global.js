@@ -219,7 +219,7 @@ var clickTimer = setInterval(function() {
 
     // product logo events
     if (location.href.indexOf('/checkout') > -1 || location.href.indexOf('/signup') > -1) {
-        var logoDom = location.href.indexOf('/checkout') ? document.querySelector('header > div > div > span > svg') : document.querySelector('#__next > div:last-child > div:first-child > div:first-child')
+        var logoDom = location.href.indexOf('/checkout') > -1 ? document.querySelector('header > div > div > span > svg') : document.querySelector('#__next > div:last-child > div:first-child > div:first-child')
         if (logoDom && !logoDom.getAttribute('data-addclick')) {
             logoDom.setAttribute('data-addclick', 'true')
             logoDom.addEventListener('click', function(e) {
