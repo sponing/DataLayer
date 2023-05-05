@@ -1,4 +1,3 @@
-// clear cart in /cart
 var clearCaratTimer = setInterval(function() {
     if (location.href.indexOf('/cart') > -1 && __NEXT_DATA__ && typeof __NEXT_DATA__ === 'object') {
         clearInterval(clearCaratTimer)
@@ -13,8 +12,8 @@ var clearCaratTimer = setInterval(function() {
                             event: 'clearCart'
                         });
                     }
-                }, 1000)
+                }, 500)
             }
-        }, 1000)
+        }, 500)
     }
 }, 500)

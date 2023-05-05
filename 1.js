@@ -1,3 +1,4 @@
+
 var doUrlAndPath = function(data, aDom) {
     if (aDom.getAttribute('href') && aDom.getAttribute('href').indexOf('http') > -1) {
         data.target_link_url = aDom.getAttribute('href')
@@ -195,27 +196,26 @@ function getComponentData(componentDom, componenttitle, componentPosition, comId
         payloadData.component_lead_in = componentDom.querySelector('.EventClass > div:nth-child(1)>p') ? componentDom.querySelector('.EventClass > div:nth-child(1)>p').textContent : ''
         if (!headerElement.isClickMore) {
             var buttons = componentDom.querySelectorAll('#tabContent button')
-            // var buttonActive = 0
+            var buttonActive = 0
             for (var i = 0; i < buttons.length; i++) {
                 if (buttons[i].getAttribute('aria-selected') === 'true') {
                     buttonActive = i
                     break;
                 }
             }
-            payloadData.product = null
-            // var fetchData = getTargetNums('Tab Products', 'data', comId).fetch_data.resultsNew[buttonActive]
-            // var sku = getSkuFormHref(aDom)
-            // for (var i = 0; i < fetchData.products.length; i++) {
-            //     if (fetchData.products[i].skuNumber == sku) {
-            //         doUrlAndPath(payloadData, aDom)
-            //         payloadData.target_position = i + 1
-            //         payloadData.target_title = fetchData.products[i].productName
-            //         payloadData.target_content = aDom.textContent
-            //         payloadData.product = fetchData.products[i]
-            //         payloadData.target_type = 'Product'
-            //         break;
-            //     }
-            // }
+            var fetchData = getTargetNums('Tab Products', 'data', comId).fetch_data.resultsNew[buttonActive]
+            var sku = getSkuFormHref(aDom)
+            for (var i = 0; i < fetchData.products.length; i++) {
+                if (fetchData.products[i].skuNumber == sku) {
+                    doUrlAndPath(payloadData, aDom)
+                    payloadData.target_position = i + 1
+                    payloadData.target_title = fetchData.products[i].productName
+                    payloadData.target_content = aDom.textContent
+                    payloadData.product = fetchData.products[i]
+                    payloadData.target_type = 'Product'
+                    break;
+                }
+            }
         }  else {
             payloadData.target_title = headerElement.headerData.moreText
             payloadData.target_content = headerElement.headerData.moreText

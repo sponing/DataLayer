@@ -159,6 +159,19 @@ var clickTimer = setInterval(function() {
                         }
                     }
                 }
+
+                if (aHeaderFooterDom.getAttribute('href').indexOf('tel:') !== -1) {
+                    deepActionData({
+                        component_type: 'My Store',
+                        action_index: '',
+                        action: 'Click',
+                        name: aHeaderFooterDom.textContent,
+                        index: '',
+                        timestamp: new Date().getTime(),
+                    })
+                    return;
+                }
+
                 var payloadData = {};
                 var target_component = clickType === 'header' ? "Header" : 'Footer';
                 var HeaderTopLinksPopup = document.querySelector('header > div:first-child .chakra-popover__body');
@@ -195,11 +208,6 @@ var clickTimer = setInterval(function() {
                 if (aHeaderFooterDom && aHeaderFooterDom.getAttribute('aria-label') && aHeaderFooterDom.getAttribute('aria-label').indexOf('Logo Home') > -1) {
                     payloadData.target_title = 'Logo'
                     payloadData.target_link_url = location.href.split('com/')[0] + 'com/'
-                }
-
-                if (aHeaderFooterDom.getAttribute('href').indexOf('tel:') !== -1) {
-                    delete payloadData.target_link_url
-                    delete payloadData.target_link_urlpath
                 }
 
                 payloadData.my_store_default = getMyStoreName()
