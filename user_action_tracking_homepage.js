@@ -40,9 +40,9 @@ var clickTimer = setInterval(function() {
     var componentsAll = document.querySelectorAll('#componentsBox > div')
     var components = []
     for (var i = 0; i < componentsAll.length; i++) {
-        if (componentsAll[i].id && componentsAll[i].textContent) {
+        // if (componentsAll[i].id && componentsAll[i].textContent) {
             components.push(componentsAll[i])
-        }
+        // }
     }
     for (var i = 0; i < components.length; i++) {
         (function(comIndex){
@@ -148,8 +148,8 @@ function getSkuFormHref(element) {
 function getComponentData(componentDom, componenttitle, componentPosition, comId, aDom, aDomIndex) {
     var payloadData = {
         component_type: componentDom.getAttribute('componentname'),
-        component_position: componentPosition + 1,
-        component_id: window.__NEXT_DATA__.props.pageProps.modules[componentPosition + 1].id,
+        component_position: componentPosition,
+        component_id: window.__NEXT_DATA__.props.pageProps.modules[componentPosition].id,
         component_title: componenttitle,
         component_timestamp: new Date().getTime(),
         component_subtitle: '',
@@ -426,3 +426,5 @@ var nextDataTimer = setInterval(function() {
         }
     }
 }, 1000)
+
+

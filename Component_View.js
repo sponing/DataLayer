@@ -15,11 +15,13 @@ function isInViewPort(element) {
 function datalayerPush(options) {
     if (!globalCompoentIsShow[options.id]) {
         globalCompoentIsShow[options.id] = 'true'
-        var datalayerData = {
-            componentId: options.id,
-            componentTitle: options.componentTitle,
-            dataTitle: options.dataTitle,
-        }
+        var datalayerData = {};
+        var datalayerDataKey = 'componentView-' + options.id;
+        datalayerData[datalayerDataKey]={  
+                componentTitle: options.componentTitle,  
+                dataTitle: options.dataTitle,  
+            }  
+
         console.log(datalayerData)
         dataLayer.push(datalayerData)
     } 
@@ -67,12 +69,12 @@ var globaldocumentTimer = setInterval(function() {
             var maxHeight = window.getComputedStyle(document.querySelector('header > div:nth-child(2) > div:nth-child(2) ul')).maxHeight
             if (maxHeight != '0px') {
                 datalayerPush({
-                    id: '',
+                    id: 'headerRecentSearches',
                     componentTitle:  'headerRecentSearches',
                     dataTitle: 'Recent Searches'
                 })
                 datalayerPush({
-                    id: '',
+                    id: 'headerTrendingProducts',
                     componentTitle:  'headerTrendingProducts',
                     dataTitle: 'Trending Products'
                 })
@@ -88,8 +90,8 @@ var globaldocumentTimer = setInterval(function() {
                     if (window.getComputedStyle(shopMenuDom).display != 'none' && TrendingNow) {
                         clearInterval(shopCategoryTimer)
                         datalayerPush({
-                            id: '',
-                            componentTitle:  'headerShopCategoriesTrendingNow',
+                            id: 'headerShopCategoriesTrendingNow',
+                            componentTitle:  'TrendingNow',
                             dataTitle: 'Trending Now'
                         })
                     }

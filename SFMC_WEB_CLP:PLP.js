@@ -3,7 +3,8 @@ var clearCaratTimerMobileClP = setInterval(function() {
         clearInterval(clearCaratTimerMobileClP)
         var breadcrumbAll = null
         var Category = []
-        if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+        var clientWidth = document.body.clientWidth
+        if (clientWidth <= 640) {
             var plpLinks = document.querySelectorAll('.breadcrumb > div')
             if (plpLinks) {
                 for (var j=0;j<plpLinks.length;j++) {
