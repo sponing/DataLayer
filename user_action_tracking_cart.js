@@ -1,13 +1,23 @@
 var dupClicksCart = {}
+var cartActions = []
+var adComponentsCart = {}
 
-var addDataCart = function (payloadData, key) {
+var addDataCart = function (payloadData, key, componentTitle) {
     if (!dupClicksCart[key]) {
         if (window.dataLayer) {
             dupClicksCart[key] = 'true'
+            var datalayerDataKey = 'componentView-' + payloadData.component;
             var layer = {
                 event: 'user_action_tracking_cart',
-                payload: payloadData
+                payload: payloadData,
+                actions: cartActions.length <= 5 ? cartActions : cartActions.splice(0, 5)
             }
+            layer[datalayerDataKey] = {
+                componentTitle: componentTitle,
+                dataTitle: payloadData.title
+            }
+            layer = Object.assign(layer, adComponentsCart)
+            console.log(layer)
             dataLayer.push(layer)
             payloadData = undefined
         }
@@ -22,24 +32,65 @@ var clearCaratTimerCart = setInterval(function() {
             linkUrlPath: '',
             urlPath: ''
         }
-        var slicks = document.querySelector('#trendNow-box') ? document.querySelector('#trendNow-box').querySelectorAll('.slick-slide a') : []
+        var objValue = {
+            'Trending Now': 'cartTrendingNow'
+        }
+        var apiPaths = {
+            'Trending Now': 'shopping_cart_bundle'
+        }
+        var slicks = document.querySelectorAll('.slick-slide a') || []
         if (slicks.length !== 0) {
+            clearInterval(clearCaratTimerCart)
             for (var i=0;i<slicks.length;i++) {
                 (function(sIndex) {
+                        var componentTitle = slicks[sIndex].closest('.slick-slider').parentNode.parentNode.querySelector('h3')
+                        var h3Title = componentTitle.textContent;
+                        var adKey = 'adComponents-' + objValue[h3Title]
+                        adComponentsCart[adKey] = {
+                            index: 0,
+                            title: h3Title,
+                            apiPath: apiPaths[h3Title]
+                        }
                         slicks[sIndex].addEventListener('click', function() {
                                 var href = window.location.href.split('?')[0]
-                                payloadData = {
-                                    component: slicks[sIndex].closest('.slick-slider').parentNode.parentNode.querySelector('h3').textContent,
+                                 payloadData = {
+                                    component: objValue[h3Title],
                                     title:  slicks[sIndex].querySelectorAll('p')[0].textContent,
                                     linkUrlPath:  slicks[sIndex].getAttribute('href'),
                                     urlPath: href.replace('com/', 'com') +  slicks[sIndex].getAttribute('href')
                                 }
-                                addDataCart(payloadData)
+                                addDataCart(payloadData,  payloadData.component + '_' + payloadData.title, h3Title)
                         })
                 })(i)
             }
+            var slickArrowCart = document.querySelectorAll('.slick-arrow')
+            for (var j=0;j<slickArrowCart.length;j++) {
+                (function(jSlick){
+                    slickArrowCart[jSlick].addEventListener('click', function() {
+                        var objKey = slickArrowCart[jSlick].closest('.slick-slider').parentNode.parentNode.querySelector('h3').textContent;
+                        var action_index = slickArrowCart[jSlick].className.indexOf('slick-prev') > -1 ? 0 : 1;
+                        var slickSliderS = document.querySelectorAll('.slick-slider')
+                        var index = 0
+                        for (var n=0;n<slickSliderS.length;n++) {
+                            if (slickSliderS[n].parentNode.parentNode.textContent.indexOf(objKey) > -1) {
+                                index = n
+                                break
+                            }
+                        }
+                        var clientWidth = document.body.clientWidth
+                        cartActions.push({
+                            component_type: objValue[objKey],
+                            index: index,
+                            action_index: action_index,
+                            action: clientWidth <= 640 ? 'Slide (mobile)' : 'Click (web)',
+                            name: objKey,
+                            timestamp: new Date().getTime(),
+                        })
+                        console.log(cartActions)
+                    })
+                })(j)
+            }
         }
-        clearInterval(clearCaratTimerCart)
     }
 }, 1000)
 
