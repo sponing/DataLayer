@@ -44,63 +44,60 @@ var clearCaratTimerPDP = setInterval(function() {
             'Projects that Use this Product': 'get-by-external-ids',
             'Recommended For You': 'recommendedForYou'
         }
-        var slicksDPDTimer =  setInterval(function() {
-            var slicksPDP = document.querySelectorAll('.slick-slide')
-            if (slicksPDP.length > 0) {
-                for (var i=0;i<slicksPDP.length;i++) {
-                    (function(sIndex) {
-                        var componentTitle = slicksPDP[sIndex].closest('.slick-slider').parentNode.parentNode.querySelector('h3')
-                        var h3Title = componentTitle.textContent;
-                        var adKey = 'adComponents-' + objValue[h3Title]
-                        adComponents[adKey] = {
-                            index: sIndex,
-                            title: h3Title,
-                            apiPath: apiPaths[h3Title]
-                        }
-                        console.log(adComponents, 'adComponentsCart')
-                        slicksPDP[sIndex].addEventListener('click', function() {
-                                    var href = window.location.href.split('?')[0]
-                                    payloadData = {
-                                        component: objValue[h3Title],
-                                        title:  slicksPDP[sIndex].querySelectorAll('p[title]')[0].textContent,
-                                        linkUrlPath:  slicksPDP[sIndex].querySelectorAll('a')[0].getAttribute('href'),
-                                        urlPath: href.replace('com/', 'com') +  slicksPDP[sIndex].querySelectorAll('a')[0].getAttribute('href')
-                                    }
-                                    addDataPdp(payloadData, payloadData.component + '_' + payloadData.title, h3Title)
-                            })
-                    })(i)
-                }
-                var slickArrowPDP = document.querySelectorAll('.slick-arrow')
-                for (var j=0;j<slickArrowPDP.length;j++) {
-                    (function(jSlick){
-                        slickArrowPDP[jSlick].addEventListener('click', function() {
-                            var objKey = slickArrowPDP[jSlick].closest('.slick-slider').parentNode.parentNode.querySelector('h3').textContent;
-                            var action_index = slickArrowPDP[jSlick].className.indexOf('slick-prev') > -1 ? 0 : 1;
-                            var slickSliderS = document.querySelectorAll('.slick-slider')
-                            var index = 0
-                            for (var n=0;n<slickSliderS.length;n++) {
-                                if (slickSliderS[n].parentNode.parentNode.textContent.indexOf(objKey) > -1) {
-                                    index = n
-                                    break
+        var slicksPDP = document.querySelectorAll('.slick-slide')
+        if (slicksPDP.length > 0) {
+            for (var i=0;i<slicksPDP.length;i++) {
+                (function(sIndex) {
+                    var componentTitle = slicksPDP[sIndex].closest('.slick-slider').parentNode.parentNode.querySelector('h3')
+                    var h3Title = componentTitle.textContent;
+                    var adKey = 'adComponents-' + objValue[h3Title]
+                    adComponents[adKey] = {
+                        index: sIndex,
+                        title: h3Title,
+                        apiPath: apiPaths[h3Title]
+                    }
+                    console.log(adComponents, 'adComponentsCart')
+                    slicksPDP[sIndex].addEventListener('click', function() {
+                                var href = window.location.href.split('?')[0]
+                                payloadData = {
+                                    component: objValue[h3Title],
+                                    title:  slicksPDP[sIndex].querySelectorAll('p[title]')[0].textContent,
+                                    linkUrlPath:  slicksPDP[sIndex].querySelectorAll('a')[0].getAttribute('href'),
+                                    urlPath: href.replace('com/', 'com') +  slicksPDP[sIndex].querySelectorAll('a')[0].getAttribute('href')
                                 }
-                            }
-                            var clientWidth = document.body.clientWidth
-                            pdpActions.push({
-                                component_type: objValue[objKey], // component id
-                                index: index, // component postion index
-                                action_index: action_index, // Wheel-cast arrow
-                                action: clientWidth <= 640 ? 'Slide (mobile)' : 'Click (web)',
-                                name: objKey, // components title
-                                timestamp: new Date().getTime()
-                            })
-                            console.log(pdpActions, 'pdpActions')
+                                addDataPdp(payloadData, payloadData.component + '_' + payloadData.title, h3Title)
                         })
-                    })(j)
-                }
-                clearInterval(slicksDPDTimer) 
+                })(i)
             }
-        }, 1000)
-        clearInterval(clearCaratTimerPDP)
+            var slickArrowPDP = document.querySelectorAll('.slick-arrow')
+            for (var j=0;j<slickArrowPDP.length;j++) {
+                (function(jSlick){
+                    slickArrowPDP[jSlick].addEventListener('click', function() {
+                        var objKey = slickArrowPDP[jSlick].closest('.slick-slider').parentNode.parentNode.querySelector('h3').textContent;
+                        var action_index = slickArrowPDP[jSlick].className.indexOf('slick-prev') > -1 ? 0 : 1;
+                        var slickSliderS = document.querySelectorAll('.slick-slider')
+                        var index = 0
+                        for (var n=0;n<slickSliderS.length;n++) {
+                            if (slickSliderS[n].parentNode.parentNode.textContent.indexOf(objKey) > -1) {
+                                index = n
+                                break
+                            }
+                        }
+                        var clientWidth = document.body.clientWidth
+                        pdpActions.push({
+                            component_type: objValue[objKey], // component id
+                            index: index, // component postion index
+                            action_index: action_index, // Wheel-cast arrow
+                            action: clientWidth <= 640 ? 'Slide (mobile)' : 'Click (web)',
+                            name: objKey, // components title
+                            timestamp: new Date().getTime()
+                        })
+                        console.log(pdpActions, 'pdpActions')
+                    })
+                })(j)
+            }
+        }
+    clearInterval(clearCaratTimerPDP)
     }
 }, 1000)
 

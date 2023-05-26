@@ -69,18 +69,10 @@ var clearCaratTimerCart = setInterval(function() {
                     slickArrowCart[jSlick].addEventListener('click', function() {
                         var objKey = slickArrowCart[jSlick].closest('.slick-slider').parentNode.parentNode.querySelector('h3').textContent;
                         var action_index = slickArrowCart[jSlick].className.indexOf('slick-prev') > -1 ? 0 : 1;
-                        var slickSliderS = document.querySelectorAll('.slick-slider')
-                        var index = 0
-                        for (var n=0;n<slickSliderS.length;n++) {
-                            if (slickSliderS[n].parentNode.parentNode.textContent.indexOf(objKey) > -1) {
-                                index = n
-                                break
-                            }
-                        }
-                        var clientWidth = document.body.clientWidth
+                       var clientWidth = document.body.clientWidth
                         cartActions.push({
                             component_type: objValue[objKey],
-                            index: index,
+                            index: 0,
                             action_index: action_index,
                             action: clientWidth <= 640 ? 'Slide (mobile)' : 'Click (web)',
                             name: objKey,
